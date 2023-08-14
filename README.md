@@ -8,4 +8,5 @@ Use the following command to run Heed.
 
 PARAMETER **i** : The image location. e.g E:\Path\to\image\
 PARAMETER **e**: The folder name that contains the artifacts. e.g. Artifacts
+
 PARAMETER **s**: This parameters is required to specify where you want the artifacts to be stored. e.g. E:\Path\
