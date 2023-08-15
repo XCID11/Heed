@@ -193,7 +193,6 @@ function runKapeCollection {
         write-host "[+] KAPE collection from $file" -ForegroundColor yellow 
         Start-Sleep -Seconds 2
         .\kape.exe --tsource $driveLetter --tdest "$colleLocation\$file\KAPE\collection" --target  BrowserCache,Antivirus,CombinedLogs,EvidenceOfExecution,Exchange,RegistryHives,RemoteAdmin,WebBrowsers,WebServers,BITS,CertUtil,GroupPolicy,LogFiles,ScheduledTasks,SRUM,StartupFolders,WBEM,WindowsFirewall,'$J','$MFT' --vhdx "$file" --zv false
-        #.\kape.exe --tsource $driveLetter --tdest "$colleLocation\$file\KAPE\collection" --target !SANS_Triage_283a56c3-2a4d-4b94-be48-ddbdcef3d9ad --vhdx "$file" --zv false
         write-host "[+] KAPE Collection is done" -ForegroundColor green     
         Set-location $scriptPath
     }
@@ -211,9 +210,7 @@ function runKapeProcessing {
         Set-location $kapeDir
         Write-host "[+] Disk is mounted to $triagLetter" -ForegroundColor yellow 
         Write-host "[+] KAPE directory is $kapeDir" -ForegroundColor yellow 
-        #.\kape.exe --msource $triagLetter":" --mdest $colleLocation\$file\KAPE\processing --module !EZParser,LogParser,MFTECmd,AmcacheParser,AppCompatCacheParser --mef csv
-        .\kape.exe --msource $triagLetter":" --mdest $colleLocation\$file\KAPE\processing --module !EZParser --mef csv
-        #.\kape.exe --msource $triagLetter":" --mdest $colleLocation\$file\KAPE\processing --module SysInternals_SigCheck,!EZParser,bstrings,LogParser,RECmd_AllBatchFiles,RegRipper --mef csv
+        .\kape.exe --msource $triagLetter":" --mdest $colleLocation\$file\KAPE\processing --module !EZParser,LogParser,MFTECmd,AmcacheParser,AppCompatCacheParser --mef csv
         Start-Sleep -Seconds 2
         write-host "[+] Dismounting triaged image" -ForegroundColor yellow   
         Dismount-DiskImage -ImagePath $imagePathVHDX
@@ -240,7 +237,7 @@ function runZircoLite {
             Write-host "[+] Event Location at $eventLocation" -ForegroundColor yellow
             Start-Sleep -Seconds 1
             Write-host "[+] ZircoLite is launching" -ForegroundColor yellow
-            .\zircolite_win10.exe --evtx $eventLocation --ruleset $zircoliteDir\rules\Cobalt_ttp.json -o $colleLocation\$file\zircolite\result-$entityName-$file.json
+            .\zircolite_win10.exe --evtx $eventLocation --ruleset $zircoliteDir\rules\rules_windows_generic_full.json -o $colleLocation\$file\zircolite\result-$entityName-$file.json
             Start-Sleep -Seconds 2
             Write-host "[+] ZircoLite is done its analysis and written to $colleLocation\$file\zircolite\" -ForegroundColor green
             Write-host "[+] ZircoLite is done" -ForegroundColor green
@@ -278,7 +275,7 @@ function runLoki {
                 Set-location "$lokiDir"
                 Start-Sleep -Seconds 3
                 write-host "[+] LOKI will Start now" -ForegroundColor green     
-                .\loki.exe -p $driveLetter`:\Users\ -l "$colleLocation\$file\loki\$driveLetter`_$file`_result.csv" --noprocscan --nopesieve --csv
+                .\loki.exe -p $driveLetter`:\ -l "$colleLocation\$file\loki\$driveLetter`_$file`_result.csv" --noprocscan --nopesieve --csv
                 Set-location $scriptPath
             }
             else {
@@ -355,7 +352,7 @@ function runScript {
                 Write-Host "[+] Evidence collected to $colleLocation\$file\" -ForegroundColor Cyan
                 Write-Host "[+] Loki has finished" -ForegroundColor green
                 Write-Host "[+] Running Volatility" -ForegroundColor Cyan
-                #runVolatility #run Volatility
+                runVolatility #run Volatility
                 Write-Host "[+] Volatility has finished" -ForegroundColor green
                 Write-Host "[+] Analysis Completed" -ForegroundColor green
                 
@@ -476,18 +473,3 @@ function validatingImges {
 
 runCode
 
-
-### IN PROGRESS TO SEND ARTIFACTS TO SOF-ELK  
-# if ($sof -is [string])
-# {
-#     write-host "[+] Transffereing files to Elastic Search"
-#     $winscp = "C:\Users\$env:USERNAME\AppData\Local\Programs\WinSCP\winscp.com"
-#     write-host $winscp
-#     Start-Process -FilePath $winscp -ArgumentList '/command "open sftp://elk_user:forensics@192.168.72.133:22" "put E:\tmp\1.txt /tmp/"' -Wait
-# }
-# if($elk -is [String]) {
-#     write-host "[+] Transffereing files to Elastic Search"
-#      & Send-FilesToRemoteServer -RemoteHost $elk -RemoteUser "elk_user" -RemotePassword "forensics" -RemoteDestination "/tmp" -LocalPaths "E:\tmp\a\kape\1.txt"
-#     exit
-# }
-#
