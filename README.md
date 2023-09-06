@@ -31,6 +31,7 @@ To check if other dependencies existed or not, run:
 `.\heed.ps1 -chk` 
 
 If the previous commands sucessed, then you are ready to run Heed using this command:	
+
 `.\heed.ps1 -i "K:\drive\images" -c "Case01" -s "E:\path\"` 	
 
 -i: image(s) path. e.g E:\Path\to\image\
