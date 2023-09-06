@@ -36,7 +36,8 @@ If the previous commands sucessed, then you are ready to run Heed using this com
 
 ``` Powershell
 .\heed.ps1 -i "K:\drive\images" -c "Case01" -s "E:\path\"
-
+```
+```
 -i: image(s) path. e.g E:\Path\to\image\
 
 -c: for Case name	
