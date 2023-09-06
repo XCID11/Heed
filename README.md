@@ -40,3 +40,7 @@ If the previous commands sucessed, then you are ready to run Heed using this com
 
 -s: Saving location
 
+To have a prettier terminal and surrpress the output of KAPE, Zircolite then use this flag `-nd`. 
+
+`.\heed.ps1 -nd -i "K:\drive\images" -c "Case01" -s "E:\path\"`
+
