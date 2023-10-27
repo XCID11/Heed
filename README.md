@@ -6,7 +6,7 @@ The tool has been created to automate the process of working with Windows images
   
   * KAPE: To triage Windows images and processing them
   
-  * ZircoLite: To scan Windows event logs with SIGMA rules
+  * ZircoLite: To scan Windows event logs with SIGMA rules (Disabled by default to use Hayabusa) 
 
   * Hayabusa: To scan Windows event logs with SIGMA rules
   
