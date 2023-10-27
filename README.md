@@ -7,6 +7,8 @@ The tool has been created to automate the process of working with Windows images
   * KAPE: To triage Windows images and processing them
   
   * ZircoLite: To scan Windows event logs with SIGMA rules
+
+  * Hayabusa: To scan Windows event logs with SIGMA rules
   
   * LOKI: To scan the Windows image for any known malicious file
   
